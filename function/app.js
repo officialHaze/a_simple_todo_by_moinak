@@ -3,18 +3,23 @@
 const userInput = $('input:text');
 const add = $('.add');
 const todoList = $('.todo-list');
-const del = $('.delete');
+
+
 
 
 // Event Listeners
 add.click(addDiv);
 $("h2").click(remove);
 document.onload = showListItems();
+$('span').click(function(){
+    const currentItem = $(this);
+    return parentIdx(currentItem);
+});
 
 
 
 
-// yeah the function works with event listener click works 
+// yeah the function works with event listener click 
 function addDiv(e) {
     // prevent the page from refreshing 
     e.preventDefault();
@@ -29,32 +34,39 @@ function addDiv(e) {
     const span = document.createElement('span');
     span.innerHTML = 'hello';
 
+    // i have to give an index to each span evrytime its created
+    // so that later on i can compare it with my array to delete any item 
+    // that the user wants to be deleted 
+    // also it must be triggered on clicking the span 
+
+
+
     const checkBox = document.createElement('input');
     checkBox.setAttribute('type', 'checkbox');
     checkBox.setAttribute('class', 'check-box');
 
     // we have to take the value that the user is entering as an input 
     var input = userInput.val();
-    console.log(input.length);
     // send the input to save local data function 
-    if(input.length<=25){
-    saveLocalData(input);
+    if (input.length <= 35) {
+        saveLocalData(input);
     }
 
     // if the user doent give any input then the list will not be created 
     if (input == '') {
         alert('Please give a valid input');
-    } else if (input != '' && input.length<=25){
+    } else if (input != '' && input.length <= 35) {
         // instead of giving our own value to the li innerhtml we have to take the input from user 
         // also prepending a checkbox for the user to check after completing a task 
         li.innerHTML = input;
         li.prepend(checkBox);
         div.appendChild(li);
         div.appendChild(span);
+
         todoList.append(div);
         // after appending the list item we have to remove the text from the input box 
         userInput.val('');
-    }else if (input.length>=25){
+    } else if (input.length >= 35) {
         alert("Entered value is too large for a todo list");
         location.reload();
     }
@@ -113,7 +125,6 @@ function showListItems() {
 
         li.innerHTML = input;
         li.prepend(checkBox);
-
         div.appendChild(li);
         div.appendChild(span);
         todoList.append(div);
@@ -122,7 +133,14 @@ function showListItems() {
 
 // when user clicks on del, we have to remove the list items 
 // lets create a function for that 
-function remove(){
+function remove() {
     localStorage.clear();
     location.reload();
+}
+
+function parentIdx(currentItem) {
+    var parent = currentItem.parent();
+    console.log(parent);
+    var parentIndex = parent.index();
+    console.log(parentIndex);
 }
