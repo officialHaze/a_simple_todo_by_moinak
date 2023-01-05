@@ -11,12 +11,10 @@ const todoList = $('.todo-list');
 add.click(addDiv);
 $("h2").click(remove);
 document.onload = showListItems();
-$('span').click(function(){
+$('span').click(function () {
     const currentItem = $(this);
     return parentIdx(currentItem);
 });
-
-
 
 
 // yeah the function works with event listener click 
@@ -39,6 +37,9 @@ function addDiv(e) {
     // that the user wants to be deleted 
     // also it must be triggered on clicking the span 
 
+    // update: instead of assigning own class index to the span everytime, now targetting its parent div 
+    // and getting its index which is called everytime the user clicks on delete.
+
 
 
     const checkBox = document.createElement('input');
@@ -48,7 +49,7 @@ function addDiv(e) {
     // we have to take the value that the user is entering as an input 
     var input = userInput.val();
     // send the input to save local data function 
-    if (input.length <= 35) {
+    if (input.length <= 35 && input != '') {
         saveLocalData(input);
     }
 
@@ -66,6 +67,7 @@ function addDiv(e) {
         todoList.append(div);
         // after appending the list item we have to remove the text from the input box 
         userInput.val('');
+        location.reload();
     } else if (input.length >= 35) {
         alert("Entered value is too large for a todo list");
         location.reload();
@@ -103,31 +105,37 @@ function saveLocalData(input) {
 function showListItems() {
 
     // lets store the array in a variable 
-    var x = JSON.parse(localStorage.getItem('todoTasks'));
+    var checkData = localStorage.getItem('todoTasks');
 
-    // now run a for loop to input each item inside array one by one to be shown to user 
-    for (var i = 0; i < x.length; i++) {
-        // and each time create the div and li for each list item to be appended one after the other 
-        const div = document.createElement('div');
-        div.setAttribute('class', 'list-items');
+    if (checkData != null) {
+        var x = JSON.parse(localStorage.getItem('todoTasks'));
 
-        const li = document.createElement('li');
-        li.setAttribute('class', 'item');
 
-        const span = document.createElement('span');
-        span.innerHTML = 'hello';
 
-        const checkBox = document.createElement('input');
-        checkBox.setAttribute('type', 'checkbox');
-        checkBox.setAttribute('class', 'check-box');
+        // now run a for loop to input each item inside array one by one to be shown to user 
+        for (var i = 0; i < x.length; i++) {
+            // and each time create the div and li for each list item to be appended one after the other 
+            const div = document.createElement('div');
+            div.setAttribute('class', 'list-items');
 
-        var input = x[i];
+            const li = document.createElement('li');
+            li.setAttribute('class', 'item');
 
-        li.innerHTML = input;
-        li.prepend(checkBox);
-        div.appendChild(li);
-        div.appendChild(span);
-        todoList.append(div);
+            const span = document.createElement('span');
+            span.innerHTML = 'hello';
+
+            const checkBox = document.createElement('input');
+            checkBox.setAttribute('type', 'checkbox');
+            checkBox.setAttribute('class', 'check-box');
+
+            var input = x[i];
+
+            li.innerHTML = input;
+            li.prepend(checkBox);
+            div.appendChild(li);
+            div.appendChild(span);
+            todoList.append(div);
+        }
     }
 }
 
@@ -138,9 +146,25 @@ function remove() {
     location.reload();
 }
 
+
 function parentIdx(currentItem) {
     var parent = currentItem.parent();
-    console.log(parent);
+
     var parentIndex = parent.index();
-    console.log(parentIndex);
+
+    return deleteItem(parentIndex, parent);
+
+}
+
+function deleteItem(parentIndex, parent) {
+    // first of all i have to get the array from local storage 
+    var checkData = localStorage.getItem('todoTasks');
+    console.log(checkData);
+
+    if (checkData != null) {
+        var x = JSON.parse(localStorage.getItem('todoTasks'));
+        x.splice(parentIndex, 1);
+        localStorage.setItem('todoTasks', JSON.stringify(x));
+        parent.remove();
+    }
 }

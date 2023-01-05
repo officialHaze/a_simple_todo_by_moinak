@@ -21,13 +21,13 @@ body {
     font-size: 2.5rem;
 }
 
-/* input{
+.user-input{
     -webkit-appearance: none;
     -moz-appearance: none;
     box-shadow: none;
     outline: none;
     border: none;
-} */
+}
 
 button{
     -webkit-appearance: none;
