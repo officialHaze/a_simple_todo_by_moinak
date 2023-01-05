@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&family=Poppins:ital@0;1&family=Wendy+One&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 3rem;
+    background: linear-gradient(to right top,  #0081C9, #5bc1f8d7);
+}
+
+.header {
+    margin-bottom: 2%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+}
+
+/* input{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    box-shadow: none;
+    outline: none;
+    border: none;
+} */
+
+button{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    box-shadow: none;
+    outline: none;
+    border: none;
+}
+
+.input-and-add {
+    display: flex;
+    transform: translateX(10%);
+}
+
+.add{
+    padding: 1rem;
+    background: #FB2576;
+    cursor: pointer;
+    border-radius: 0.25rem 0 0 0.25rem;
+    border: 1px solid rgba(122, 122, 122, 0.568);
+    font-size: 1rem;
+    color: white;
+    border-color: #FB2576;
+}
+
+.todo-form{
+    width: 100%;
+}
+
+.user-input{
+    padding: 0.85rem;
+    border-radius: 0 0.25rem 0.25rem 0;
+    border: 1px solid rgba(122, 122, 122, 0.568);
+    font-family: 'Poppins', sans-serif;
+    width: 70%;
+}
+
+.list-container {
+    width: 30rem;
+    min-height: 30rem;
+    padding: 1.25rem 0;
+    background: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.411);
+}
+
+.todo-list {
+    font-family: 'Poppins', sans-serif;
+    padding: 1rem 2rem;
+}
+
+li{
+    padding: 1rem;
+    list-style: none;
+}
+
+.check-box {
+    margin-right: 0.85rem;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.list-items {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.486);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 1.25rem;
+    font-size: 1rem;
+}
+
