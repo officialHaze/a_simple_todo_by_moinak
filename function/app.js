@@ -30,7 +30,8 @@ function addDiv(e) {
     li.setAttribute('class', 'item');
 
     const span = document.createElement('span');
-    span.innerHTML = 'hello';
+    span.innerHTML = '<i class="fa-solid fa-trash"></i>';
+    span.setAttribute('class', 'trash');
 
     // i have to give an index to each span evrytime its created
     // so that later on i can compare it with my array to delete any item 
@@ -66,8 +67,9 @@ function addDiv(e) {
 
         todoList.append(div);
         // after appending the list item we have to remove the text from the input box 
-        userInput.val('');
         location.reload();
+        userInput.val('');
+        
     } else if (input.length >= 35) {
         alert("Entered value is too large for a todo list");
         location.reload();
@@ -122,7 +124,8 @@ function showListItems() {
             li.setAttribute('class', 'item');
 
             const span = document.createElement('span');
-            span.innerHTML = 'hello';
+            span.innerHTML = '<i class="fa-solid fa-trash"></i>';
+            span.setAttribute('class', 'trash');
 
             const checkBox = document.createElement('input');
             checkBox.setAttribute('type', 'checkbox');
@@ -161,10 +164,24 @@ function deleteItem(parentIndex, parent) {
     var checkData = localStorage.getItem('todoTasks');
     console.log(checkData);
 
+    // then check if the array is empty or not , if not empty then proceed or else return false 
     if (checkData != null) {
+        // parsing the stringified array 
         var x = JSON.parse(localStorage.getItem('todoTasks'));
+        // removing the element with the index of its parent as assigned in the previous function
         x.splice(parentIndex, 1);
+        // setting the local storage with the remaining items in the array after splicing 
         localStorage.setItem('todoTasks', JSON.stringify(x));
-        parent.remove();
+        // then removing the parent element along with its child 
+        parent.animate({
+            left: '-=150%'
+        }, 600, function(){
+            parent.remove();
+        });
+    }else {
+        return false
     }
 }
+
+
+

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&family=Poppins:ital@0;1&family=Wendy+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&family=Poppins:ital,wght@0,400;0,600;1,400&family=Wendy+One&display=swap');
 
 * {
     margin: 0;
@@ -12,24 +12,30 @@ body {
     align-items: center;
     min-height: 100vh;
     padding: 3rem;
-    background: linear-gradient(to right top,  #0081C9, #5bc1f8d7);
+    background: #FEC260;
 }
 
 .header {
     margin-bottom: 2%;
     font-family: 'Poppins', sans-serif;
+    font-weight: 600;
     font-size: 2.5rem;
 }
 
-.user-input{
+.user-input {
     -webkit-appearance: none;
     -moz-appearance: none;
     box-shadow: none;
     outline: none;
     border: none;
+    padding: 0.85rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+    border: 2px solid black;
+    font-family: 'Poppins', sans-serif;
+    width: 70%;
 }
 
-button{
+button {
     -webkit-appearance: none;
     -moz-appearance: none;
     box-shadow: none;
@@ -42,45 +48,48 @@ button{
     transform: translateX(10%);
 }
 
-.add{
+.add {
     padding: 1rem;
-    background: #FB2576;
+    background: #F9D371;
     cursor: pointer;
-    border-radius: 0.25rem 0 0 0.25rem;
-    border: 1px solid rgba(122, 122, 122, 0.568);
+    border-radius: 0.5rem 0 0 0.5rem;
+    border: 2px solid black;
     font-size: 1rem;
-    color: white;
-    border-color: #FB2576;
+    border-right: none;
+    color: black;
 }
 
-.todo-form{
+.add:hover{
+    background: #FFC600;
+    color: white;
+}
+
+
+
+.todo-form {
     width: 100%;
 }
 
-.user-input{
-    padding: 0.85rem;
-    border-radius: 0 0.25rem 0.25rem 0;
-    border: 1px solid rgba(122, 122, 122, 0.568);
-    font-family: 'Poppins', sans-serif;
-    width: 70%;
-}
 
 .list-container {
     width: 30rem;
     min-height: 30rem;
     padding: 1.25rem 0;
     background: white;
-    border-radius: 0.5rem;
+    border: 2px solid black;
+    border-radius: 1rem;
     overflow: hidden;
-    box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.411);
+    box-shadow: 7.25px 7.25px black;
 }
 
 .todo-list {
     font-family: 'Poppins', sans-serif;
+    font-weight: 600;
     padding: 1rem 2rem;
+    margin-top: 1%;
 }
 
-li{
+li {
     padding: 1rem;
     list-style: none;
 }
@@ -96,11 +105,30 @@ li{
 }
 
 .list-items {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.486);
+    border-bottom: 0.12rem solid black;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-right: 1.25rem;
+    padding-right: 0.5rem;
     font-size: 1rem;
+    position: relative;
+    margin: 0 0 2rem;
 }
 
+.trash {
+    color: red;
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.trash:hover {
+    background: red;
+    color: white;
+    border-radius: 50%;
+    transform: scale(1.2);
+}
