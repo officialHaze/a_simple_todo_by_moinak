@@ -16,6 +16,12 @@ $('span').click(function () {
     return parentIdx(currentItem);
 });
 
+$('.check-box').click(function (e) {
+    var currentCheckBox = $(this);
+    var currentState = e.target;
+    return statusOfCurrentCheckBox(currentState, currentCheckBox);
+});
+
 
 // yeah the function works with event listener click 
 function addDiv(e) {
@@ -69,7 +75,7 @@ function addDiv(e) {
         // after appending the list item we have to remove the text from the input box 
         location.reload();
         userInput.val('');
-        
+
     } else if (input.length >= 35) {
         alert("Entered value is too large for a todo list");
         location.reload();
@@ -119,6 +125,7 @@ function showListItems() {
             // and each time create the div and li for each list item to be appended one after the other 
             const div = document.createElement('div');
             div.setAttribute('class', 'list-items');
+
 
             const li = document.createElement('li');
             li.setAttribute('class', 'item');
@@ -175,12 +182,67 @@ function deleteItem(parentIndex, parent) {
         // then removing the parent element along with its child 
         parent.animate({
             left: '-=150%'
-        }, 600, function(){
+        }, 600, function () {
             parent.remove();
         });
-    }else {
+    } else {
         return false
     }
+}
+
+function statusOfCurrentCheckBox(currentState, currentCheckBox) {
+    // so everytime i click on an checkbox, i have to get the index of the corresponding input or div
+    // so that when we show the local stored items , we can target those specific divs and add functionality 
+
+    var boolean = currentState.checked;
+    console.log(boolean);
+    var grandParent = currentCheckBox.parents('.list-items');
+    var indexOfGrandParent = grandParent.index();
+    console.log(indexOfGrandParent);
+
+    if (boolean) {
+        var w = 'true';
+        grandParent.addClass('finished');
+        // to get the input as per the index of grandparent 
+        var checkData = localStorage.getItem('todoTasks');
+
+        if (checkData != null) {
+            var x = JSON.parse(localStorage.getItem('todoTasks'));
+            var inputAsPerIdx = x[indexOfGrandParent];
+            var checkInpt = inputAsPerIdx + w;
+
+            // now to push this input as new input with the boolean and save it locally on another key 
+            saveNewInput(checkInpt, indexOfGrandParent);
+        } else {
+            return false;
+        }
+    } else {
+        var w = 'false';
+        grandParent.removeClass('finished');
+    }
+
+
+
+}
+
+function saveNewInput(checkInpt, indexOfGrandParent) {
+    var newInput;
+    var checkData = localStorage.getItem('newInput');
+    if (checkData === null) {
+        newInput = [];
+    } else {
+        newInput = JSON.parse(localStorage.getItem('newInput'));
+
+    }
+
+
+    if(newInput[indexOfGrandParent] != checkInpt){
+        newInput.push(checkInpt);
+        localStorage.setItem('newInput', JSON.stringify(newInput));
+    }else {
+        return false;
+    }
+
 }
 
 
