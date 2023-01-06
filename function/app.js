@@ -127,6 +127,8 @@ function showListItems() {
             div.setAttribute('class', 'list-items');
 
 
+
+
             const li = document.createElement('li');
             li.setAttribute('class', 'item');
 
@@ -146,6 +148,31 @@ function showListItems() {
             div.appendChild(span);
             todoList.append(div);
         }
+
+
+        $('.list-items').each(function () {
+            var divIdx = $(this).index();
+            var childElementOfDiv = $(this).children('li');
+            var contentOfChild = childElementOfDiv.text();
+            var childOfLi = childElementOfDiv.children('.check-box');
+
+
+            if (localStorage.getItem('newInput') != null) {
+                var p = JSON.parse(localStorage.getItem('newInput'));
+                console.log(p);
+
+                if (p[divIdx] == (contentOfChild + 'true')) {
+                    console.log(p[divIdx]);
+                    childOfLi.prop('checked', true);
+                } else {
+                    childOfLi.prop('checked', false);
+                }
+            }
+
+        });
+
+
+
     }
 }
 
@@ -169,6 +196,7 @@ function parentIdx(currentItem) {
 function deleteItem(parentIndex, parent) {
     // first of all i have to get the array from local storage 
     var checkData = localStorage.getItem('todoTasks');
+    var checkNewInputData = localStorage.getItem('newInput');
     console.log(checkData);
 
     // then check if the array is empty or not , if not empty then proceed or else return false 
@@ -188,6 +216,18 @@ function deleteItem(parentIndex, parent) {
     } else {
         return false
     }
+
+    if (checkNewInputData != null) {
+        // parsing the stringified array 
+        var b = JSON.parse(localStorage.getItem('newInput'));
+        // removing the element with the index of its parent as assigned in the previous function
+        b.splice(parentIndex, 1);
+        // setting the local storage with the remaining items in the array after splicing 
+        localStorage.setItem('newInput', JSON.stringify(b));
+    } else {
+        return false
+    }
+
 }
 
 function statusOfCurrentCheckBox(currentState, currentCheckBox) {
@@ -195,30 +235,54 @@ function statusOfCurrentCheckBox(currentState, currentCheckBox) {
     // so that when we show the local stored items , we can target those specific divs and add functionality 
 
     var boolean = currentState.checked;
-    console.log(boolean);
+
     var grandParent = currentCheckBox.parents('.list-items');
     var indexOfGrandParent = grandParent.index();
     console.log(indexOfGrandParent);
 
     if (boolean) {
         var w = 'true';
-        grandParent.addClass('finished');
-        // to get the input as per the index of grandparent 
-        var checkData = localStorage.getItem('todoTasks');
+
+
+        var checkData = localStorage.getItem('newInput');
 
         if (checkData != null) {
+            var x = JSON.parse(localStorage.getItem('todoTasks'));
+            var inputAsPerIdx = x[indexOfGrandParent];
+            var checkInpt = inputAsPerIdx + w;
+            var k = JSON.parse(localStorage.getItem('newInput'));
+
+            k[indexOfGrandParent] = checkInpt;
+
+            localStorage.setItem('newInput', JSON.stringify(k));
+        } else {
             var x = JSON.parse(localStorage.getItem('todoTasks'));
             var inputAsPerIdx = x[indexOfGrandParent];
             var checkInpt = inputAsPerIdx + w;
 
             // now to push this input as new input with the boolean and save it locally on another key 
             saveNewInput(checkInpt, indexOfGrandParent);
-        } else {
-            return false;
         }
     } else {
         var w = 'false';
-        grandParent.removeClass('finished');
+
+        var checkData = localStorage.getItem('newInput');
+
+        if (checkData != null) {
+            var x = JSON.parse(localStorage.getItem('todoTasks'));
+            var inputAsPerIdx = x[indexOfGrandParent];
+            var checkInpt = inputAsPerIdx + w;
+            var k = JSON.parse(localStorage.getItem('newInput'));
+
+            k[indexOfGrandParent] = checkInpt;
+
+            localStorage.setItem('newInput', JSON.stringify(k));
+
+
+
+        } else {
+            return false;
+        }
     }
 
 
@@ -236,14 +300,13 @@ function saveNewInput(checkInpt, indexOfGrandParent) {
     }
 
 
-    if(newInput[indexOfGrandParent] != checkInpt){
+    if (newInput[indexOfGrandParent] != checkInpt) {
         newInput.push(checkInpt);
         localStorage.setItem('newInput', JSON.stringify(newInput));
-    }else {
+    } else {
         return false;
     }
 
 }
-
 
 
