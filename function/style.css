@@ -59,6 +59,17 @@ button {
     color: black;
 }
 
+
+.fa-plus-anime-start {
+    transition: transform 1s;
+    transform: scale(1.5) rotate(180deg);
+}
+
+.fa-plus-anime-end {
+    transition: transform 1s;
+    transform: scale(1);
+}
+
 .add:hover {
     background: #FFC600;
     color: white;

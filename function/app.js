@@ -17,10 +17,24 @@ $('span').click(function () {
 });
 
 $('.check-box').click(function (e) {
+    completeOrNot();
     var currentCheckBox = $(this);
     var currentState = e.target;
     return statusOfCurrentCheckBox(currentState, currentCheckBox);
+    
 });
+
+add.mouseenter(function () {
+    $('.fa-plus').removeClass('fa-plus-anime-end');
+    $('.fa-plus').addClass('fa-plus-anime-start');
+});
+
+add.mouseleave(function () {
+    $('.fa-plus').removeClass('fa-plus-anime-start');
+    $('.fa-plus').addClass('fa-plus-anime-end');
+});
+
+
 
 
 // yeah the function works with event listener click 
@@ -171,8 +185,7 @@ function showListItems() {
 
         });
 
-
-
+        completeOrNot();
     }
 }
 
@@ -308,5 +321,28 @@ function saveNewInput(checkInpt, indexOfGrandParent) {
     }
 
 }
+
+
+function completeOrNot() {
+    var listItems = $('.list-items');
+    console.log(listItems);
+    listItems.each(function () {
+        var currentListItem = $(this);
+
+        var inputInsideListItem = currentListItem.children('li');
+        var inputInsideItem = inputInsideListItem.children('.check-box');
+        console.log(inputInsideItem);
+
+        var statusofInputInside = inputInsideItem.is(':checked');
+
+        if (statusofInputInside) {
+            currentListItem.addClass('finished');
+        } else {
+            currentListItem.removeClass('finished');
+        }
+    });
+}
+
+
 
 
