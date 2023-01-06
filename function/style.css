@@ -154,14 +154,21 @@ li {
     text-decoration: line-through;
 }
 
-/* for all mobile view  */
-@media(max-width: 415px){
+.copyright {
+    margin-top: 7%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    color: #222222
+}
 
-    body{
+/* for all mobile view  */
+@media(max-width: 415px) {
+
+    body {
         padding-top: 6rem;
     }
 
-    .list-container{
+    .list-container {
         margin-top: 7%;
         width: 22rem;
         min-height: 23rem;
