@@ -1,5 +1,5 @@
 
-// Selectors 
+// / Selectors 
 const userInput = $('input:text');
 const add = $('.add');
 const todoList = $('.todo-list');
@@ -7,20 +7,18 @@ const todoList = $('.todo-list');
 // Event Listeners
 add.click(addDiv);
 $("h2").click(remove);
-document.addEventListener('DOMContentLoaded', showListItems);
-
-$('.trash').click(function () {
-    const currentTrashItem = $(this);
-    return parentIdx(currentTrashItem);
-
+document.onload = showListItems();
+$('span').click(function () {
+    const currentItem = $(this);
+    return parentIdx(currentItem);
 });
 
 $('.check-box').click(function (e) {
     completeOrNot();
     var currentCheckBox = $(this);
-    console.log(currentCheckBox);
     var currentState = e.target;
     return statusOfCurrentCheckBox(currentState, currentCheckBox);
+
 });
 
 add.mouseenter(function () {
@@ -38,7 +36,7 @@ add.mouseleave(function () {
 
 // yeah the function works with event listener click 
 function addDiv(e) {
-    // prevent the page from refreshing
+    // prevent the page from refreshing 
     e.preventDefault();
 
     // create the divs' and lis' that we want to add and assign them their respective class 
@@ -51,7 +49,6 @@ function addDiv(e) {
     const span = document.createElement('span');
     span.innerHTML = '<i class="fa-solid fa-trash"></i>';
     span.setAttribute('class', 'trash');
-
 
     // i have to give an index to each span evrytime its created
     // so that later on i can compare it with my array to delete any item 
@@ -88,7 +85,6 @@ function addDiv(e) {
         todoList.append(div);
         // after appending the list item we have to remove the text from the input box 
         location.reload();
-
         userInput.val('');
 
     } else if (input.length >= 35) {
@@ -96,14 +92,7 @@ function addDiv(e) {
         location.reload();
     }
 
-
-
 }
-
-
-
-
-
 
 // So now we have to store or save the inputs and everything on local storage
 // so that when the user refreshes his website , the inputs stays the same
@@ -169,7 +158,6 @@ function showListItems() {
             div.appendChild(li);
             div.appendChild(span);
             todoList.append(div);
-
         }
 
 
@@ -206,13 +194,10 @@ function remove() {
 }
 
 
-function parentIdx(currentTrashItem) {
-    var parent = currentTrashItem.parent();
-
-
+function parentIdx(currentItem) {
+    var parent = currentItem.parent();
 
     var parentIndex = parent.index();
-
 
     return deleteItem(parentIndex, parent);
 
@@ -222,15 +207,14 @@ function deleteItem(parentIndex, parent) {
     // first of all i have to get the array from local storage 
     var checkData = localStorage.getItem('todoTasks');
     var checkNewInputData = localStorage.getItem('newInput');
+    console.log(checkData);
 
     // then check if the array is empty or not , if not empty then proceed or else return false 
     if (checkData != null) {
         // parsing the stringified array 
         var x = JSON.parse(localStorage.getItem('todoTasks'));
-
         // removing the element with the index of its parent as assigned in the previous function
         x.splice(parentIndex, 1);
-
         // setting the local storage with the remaining items in the array after splicing 
         localStorage.setItem('todoTasks', JSON.stringify(x));
         // then removing the parent element along with its child 
@@ -311,8 +295,6 @@ function statusOfCurrentCheckBox(currentState, currentCheckBox) {
         }
     }
 
-
-
 }
 
 function saveNewInput(checkInpt, indexOfGrandParent) {
@@ -327,7 +309,7 @@ function saveNewInput(checkInpt, indexOfGrandParent) {
 
 
     if (newInput[indexOfGrandParent] != checkInpt) {
-        newInput.push(checkInpt);
+        newInput[indexOfGrandParent] = checkInpt;
         localStorage.setItem('newInput', JSON.stringify(newInput));
     } else {
         return false;
@@ -338,12 +320,13 @@ function saveNewInput(checkInpt, indexOfGrandParent) {
 
 function completeOrNot() {
     var listItems = $('.list-items');
-
+    console.log(listItems);
     listItems.each(function () {
         var currentListItem = $(this);
+
         var inputInsideListItem = currentListItem.children('.item');
         var inputInsideItem = inputInsideListItem.children('.check-box');
-
+        console.log(inputInsideItem);
 
         var statusofInputInside = inputInsideItem.is(':checked');
 
