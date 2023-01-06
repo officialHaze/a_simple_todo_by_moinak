@@ -117,7 +117,8 @@ li {
     justify-content: center;
 }
 
-.list-items {
+.list-items,
+.moveLeft {
     border-bottom: 0.12rem solid black;
     display: flex;
     align-items: center;
@@ -137,6 +138,10 @@ li {
     align-items: center;
     justify-content: center;
     transition: transform 0.2s;
+}
+
+.fa-trash {
+    pointer-events: none;
 }
 
 
@@ -160,6 +165,13 @@ li {
     font-size: 0.85rem;
     color: #222222
 }
+
+.moveLeft {
+    transition: transform 1s;
+    transform: translateX(-150%);
+}
+
+
 
 /* for all mobile view  */
 @media(max-width: 415px) {

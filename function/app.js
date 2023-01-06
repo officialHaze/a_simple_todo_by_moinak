@@ -8,16 +8,39 @@ const todoList = $('.todo-list');
 add.click(addDiv);
 $("h2").click(remove);
 document.onload = showListItems();
-$('span').click(function () {
-    const currentItem = $(this);
-    return parentIdx(currentItem);
-});
 
-$('.check-box').click(function (e) {
-    completeOrNot();
-    var currentCheckBox = $(this);
-    var currentState = e.target;
-    return statusOfCurrentCheckBox(currentState, currentCheckBox);
+// $('span').click(function () {
+//     const currentItem = $(this);
+//     return parentIdx(currentItem);
+// });
+
+// $('.check-box').click(function (e) {
+//     completeOrNot();
+//     var currentCheckBox = $(this);
+//     var currentState = e.target;
+//     return statusOfCurrentCheckBox(currentState, currentCheckBox);
+
+// });
+
+todoList.click(function (e) {
+    var clicked = e.target;
+    var directParent = clicked.parentElement;
+    var directChildOfDirectParent = directParent.children[0];
+    var innerTextOfChild = directChildOfDirectParent.innerText;
+    console.log(innerTextOfChild);
+
+    if (clicked.classList.contains('trash')) {
+        deleteItem(innerTextOfChild, directParent);
+    }
+
+    if (clicked.classList.contains('check-box')) {
+        completeOrNot();
+
+        var innerTextOfItem = directParent.innerText
+
+
+        statusOfCurrentCheckBox(clicked, innerTextOfItem);
+    }
 
 });
 
@@ -84,8 +107,9 @@ function addDiv(e) {
 
         todoList.append(div);
         // after appending the list item we have to remove the text from the input box 
-        location.reload();
+
         userInput.val('');
+
 
     } else if (input.length >= 35) {
         alert("Slow down coach! Its always better to break down your tasks.");
@@ -93,6 +117,7 @@ function addDiv(e) {
     }
 
 }
+
 
 // So now we have to store or save the inputs and everything on local storage
 // so that when the user refreshes his website , the inputs stays the same
@@ -203,26 +228,25 @@ function parentIdx(currentItem) {
 
 }
 
-function deleteItem(parentIndex, parent) {
+function deleteItem(innerTextOfChild, directParent) {
     // first of all i have to get the array from local storage 
     var checkData = localStorage.getItem('todoTasks');
     var checkNewInputData = localStorage.getItem('newInput');
-    console.log(checkData);
+
 
     // then check if the array is empty or not , if not empty then proceed or else return false 
     if (checkData != null) {
         // parsing the stringified array 
         var x = JSON.parse(localStorage.getItem('todoTasks'));
         // removing the element with the index of its parent as assigned in the previous function
-        x.splice(parentIndex, 1);
+        x.splice(x.indexOf(innerTextOfChild), 1);
         // setting the local storage with the remaining items in the array after splicing 
         localStorage.setItem('todoTasks', JSON.stringify(x));
         // then removing the parent element along with its child 
-        parent.animate({
-            left: '-=150%'
-        }, 600, function () {
-            parent.remove();
-        });
+        directParent.setAttribute('class', 'moveLeft');
+        setTimeout(() => {
+            directParent.style.display = 'none';
+        }, 500);
     } else {
         return false
     }
@@ -231,7 +255,7 @@ function deleteItem(parentIndex, parent) {
         // parsing the stringified array 
         var b = JSON.parse(localStorage.getItem('newInput'));
         // removing the element with the index of its parent as assigned in the previous function
-        b.splice(parentIndex, 1);
+        b.splice(x.indexOf(innerTextOfChild), 1);
         // setting the local storage with the remaining items in the array after splicing 
         localStorage.setItem('newInput', JSON.stringify(b));
     } else {
@@ -240,15 +264,14 @@ function deleteItem(parentIndex, parent) {
 
 }
 
-function statusOfCurrentCheckBox(currentState, currentCheckBox) {
+function statusOfCurrentCheckBox(clicked, innerTextOfItem) {
     // so everytime i click on an checkbox, i have to get the index of the corresponding input or div
     // so that when we show the local stored items , we can target those specific divs and add functionality 
 
-    var boolean = currentState.checked;
+    var boolean = clicked.checked;
 
-    var grandParent = currentCheckBox.parents('.list-items');
-    var indexOfGrandParent = grandParent.index();
-    console.log(indexOfGrandParent);
+    // var grandParent = currentCheckBox.parents('.list-items');
+    // var indexOfGrandParent = grandParent.index();
 
     if (boolean) {
         var w = 'true';
@@ -258,20 +281,23 @@ function statusOfCurrentCheckBox(currentState, currentCheckBox) {
 
         if (checkData != null) {
             var x = JSON.parse(localStorage.getItem('todoTasks'));
-            var inputAsPerIdx = x[indexOfGrandParent];
-            var checkInpt = inputAsPerIdx + w;
+            // var inputAsPerIdx = x[indexOfGrandParent];
+            var checkInpt = innerTextOfItem + w;
+            var indexOfInnerText = x.indexOf(innerTextOfItem);
+
             var k = JSON.parse(localStorage.getItem('newInput'));
 
-            k[indexOfGrandParent] = checkInpt;
+            k[indexOfInnerText] = checkInpt;
 
             localStorage.setItem('newInput', JSON.stringify(k));
         } else {
             var x = JSON.parse(localStorage.getItem('todoTasks'));
-            var inputAsPerIdx = x[indexOfGrandParent];
-            var checkInpt = inputAsPerIdx + w;
+            // var inputAsPerIdx = x[indexOfGrandParent];
+            var checkInpt = innerTextOfItem + w;
+            var indexOfInnerText = x.indexOf(innerTextOfItem);
 
             // now to push this input as new input with the boolean and save it locally on another key 
-            saveNewInput(checkInpt, indexOfGrandParent);
+            saveNewInput(checkInpt, indexOfInnerText);
         }
     } else {
         var w = 'false';
@@ -280,11 +306,12 @@ function statusOfCurrentCheckBox(currentState, currentCheckBox) {
 
         if (checkData != null) {
             var x = JSON.parse(localStorage.getItem('todoTasks'));
-            var inputAsPerIdx = x[indexOfGrandParent];
-            var checkInpt = inputAsPerIdx + w;
+            // var inputAsPerIdx = x[indexOfGrandParent];
+            var checkInpt = innerTextOfItem + w;
+            var indexOfInnerText = x.indexOf(innerTextOfItem);
             var k = JSON.parse(localStorage.getItem('newInput'));
 
-            k[indexOfGrandParent] = checkInpt;
+            k[indexOfInnerText] = checkInpt;
 
             localStorage.setItem('newInput', JSON.stringify(k));
 
@@ -297,7 +324,7 @@ function statusOfCurrentCheckBox(currentState, currentCheckBox) {
 
 }
 
-function saveNewInput(checkInpt, indexOfGrandParent) {
+function saveNewInput(checkInpt, indexOfInnerText) {
     var newInput;
     var checkData = localStorage.getItem('newInput');
     if (checkData === null) {
@@ -308,8 +335,8 @@ function saveNewInput(checkInpt, indexOfGrandParent) {
     }
 
 
-    if (newInput[indexOfGrandParent] != checkInpt) {
-        newInput[indexOfGrandParent] = checkInpt;
+    if (newInput[indexOfInnerText] != checkInpt) {
+        newInput[indexOfInnerText] = checkInpt;
         localStorage.setItem('newInput', JSON.stringify(newInput));
     } else {
         return false;
@@ -320,7 +347,6 @@ function saveNewInput(checkInpt, indexOfGrandParent) {
 
 function completeOrNot() {
     var listItems = $('.list-items');
-    console.log(listItems);
     listItems.each(function () {
         var currentListItem = $(this);
 
