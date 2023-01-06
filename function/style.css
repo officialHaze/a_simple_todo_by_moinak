@@ -156,6 +156,9 @@ li {
 .finished {
     opacity: 0.5;
     transition: text-decoration 1s;
+}
+
+.finished-line-thru {
     text-decoration: line-through;
 }
 
@@ -190,4 +193,5 @@ li {
     .header {
         font-size: 2rem;
     }
+
 }

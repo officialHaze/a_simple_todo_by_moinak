@@ -352,9 +352,11 @@ function completeOrNot() {
         var statusofInputInside = inputInsideItem.is(':checked');
 
         if (statusofInputInside) {
-            inputInsideListItem.addClass('finished');
+            currentListItem.addClass('finished');
+            inputInsideListItem.addClass('finished-line-thru');
         } else {
-            inputInsideListItem.removeClass('finished');
+            currentListItem.removeClass('finished');
+            inputInsideListItem.removeClass('finished-line-thru');
         }
     });
 }
