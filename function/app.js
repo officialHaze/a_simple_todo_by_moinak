@@ -27,7 +27,6 @@ todoList.click(function (e) {
     var directParent = clicked.parentElement;
     var directChildOfDirectParent = directParent.children[0];
     var innerTextOfChild = directChildOfDirectParent.innerText;
-    console.log(innerTextOfChild);
 
     if (clicked.classList.contains('trash')) {
         deleteItem(innerTextOfChild, directParent);
@@ -219,19 +218,13 @@ function remove() {
 }
 
 
-function parentIdx(currentItem) {
-    var parent = currentItem.parent();
-
-    var parentIndex = parent.index();
-
-    return deleteItem(parentIndex, parent);
-
-}
-
 function deleteItem(innerTextOfChild, directParent) {
     // first of all i have to get the array from local storage 
     var checkData = localStorage.getItem('todoTasks');
     var checkNewInputData = localStorage.getItem('newInput');
+
+    var x = JSON.parse(localStorage.getItem('todoTasks'));
+    var indexOfInnertext = x.indexOf(innerTextOfChild);
 
 
     // then check if the array is empty or not , if not empty then proceed or else return false 
@@ -247,17 +240,19 @@ function deleteItem(innerTextOfChild, directParent) {
         setTimeout(() => {
             directParent.style.display = 'none';
         }, 500);
+
     } else {
         return false
     }
 
     if (checkNewInputData != null) {
         // parsing the stringified array 
-        var b = JSON.parse(localStorage.getItem('newInput'));
-        // removing the element with the index of its parent as assigned in the previous function
-        b.splice(x.indexOf(innerTextOfChild), 1);
-        // setting the local storage with the remaining items in the array after splicing 
+        var b = JSON.parse(localStorage.getItem('newInput'))
+
+        b.splice(indexOfInnertext, 1);
+
         localStorage.setItem('newInput', JSON.stringify(b));
+
     } else {
         return false
     }
