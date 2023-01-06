@@ -4,9 +4,6 @@ const userInput = $('input:text');
 const add = $('.add');
 const todoList = $('.todo-list');
 
-
-
-
 // Event Listeners
 add.click(addDiv);
 $("h2").click(remove);
@@ -76,7 +73,7 @@ function addDiv(e) {
 
     // if the user doent give any input then the list will not be created 
     if (input == '') {
-        alert('Please give a valid input');
+        alert('Really! Are you sure you dont have any task to do?');
     } else if (input != '' && input.length <= 35) {
         // instead of giving our own value to the li innerhtml we have to take the input from user 
         // also prepending a checkbox for the user to check after completing a task 
@@ -91,7 +88,7 @@ function addDiv(e) {
         userInput.val('');
 
     } else if (input.length >= 35) {
-        alert("Entered value is too large for a todo list");
+        alert("Slow down coach! Its always better to break down your tasks.");
         location.reload();
     }
 
@@ -329,16 +326,16 @@ function completeOrNot() {
     listItems.each(function () {
         var currentListItem = $(this);
 
-        var inputInsideListItem = currentListItem.children('li');
+        var inputInsideListItem = currentListItem.children('.item');
         var inputInsideItem = inputInsideListItem.children('.check-box');
         console.log(inputInsideItem);
 
         var statusofInputInside = inputInsideItem.is(':checked');
 
         if (statusofInputInside) {
-            currentListItem.addClass('finished');
+            inputInsideListItem.addClass('finished');
         } else {
-            currentListItem.removeClass('finished');
+            inputInsideListItem.removeClass('finished');
         }
     });
 }

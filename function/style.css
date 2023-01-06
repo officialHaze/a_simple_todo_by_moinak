@@ -110,14 +110,14 @@ li {
 }
 
 
-.item {
+.item,
+.finished {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.list-items,
-.finished {
+.list-items {
     border-bottom: 0.12rem solid black;
     display: flex;
     align-items: center;
@@ -139,6 +139,7 @@ li {
     transition: transform 0.2s;
 }
 
+
 .trash:hover {
     background: red;
     color: white;
@@ -149,4 +150,25 @@ li {
 
 .finished {
     opacity: 0.5;
+    transition: text-decoration 1s;
+    text-decoration: line-through;
+}
+
+/* for all mobile view  */
+@media(max-width: 415px){
+
+    body{
+        padding-top: 6rem;
+    }
+
+    .list-container{
+        margin-top: 7%;
+        width: 22rem;
+        min-height: 23rem;
+        box-shadow: 7px 7px black;
+    }
+
+    .header {
+        font-size: 2rem;
+    }
 }
