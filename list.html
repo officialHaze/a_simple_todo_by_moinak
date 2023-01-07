@@ -20,7 +20,7 @@
 
 <body>
     <div class="header">
-        <h2>ToDo list</h2>
+        <h2></h2>
     </div>
 
 
@@ -38,21 +38,25 @@
 
         <div class="filter">
 
-            <div class="filter-inner">
+            <div class="filter-container">
 
-                <div class="filter-status">
-                    <p>All</p>
-                    <div class="active"></div>
-                </div>
+                <div class="filter-inner">
 
-                <div class="filter-status">
-                    <p>Completed</p>
-                    <div></div>
-                </div>
+                    <div class="filter-status">
+                        <p>All</p>
+                        <div class="active"></div>
+                    </div>
 
-                <div class="filter-status">
-                    <p>Pending</p>
-                    <div></div>
+                    <div class="filter-status">
+                        <p>Completed</p>
+                        <div></div>
+                    </div>
+
+                    <div class="filter-status">
+                        <p>Pending</p>
+                        <div></div>
+                    </div>
+
                 </div>
 
             </div>
@@ -61,6 +65,14 @@
 
         <ol class="todo-list">
         </ol>
+
+        <div class="clear-btn">
+            <div class="popup">
+                <span class="popuptext" id="myPopup">Warning! This will delete the entire ToDo.</span>
+            </div>
+            <button type="button" class="clear-all-btn">Clear ALL</button>
+        </div>
+
 
     </div>
 

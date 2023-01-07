@@ -10,6 +10,10 @@ const filterStatus = $('.filter-status');
 const filterActive = $('.active');
 const pageHeader = $('.header');
 
+const popUp = $('#myPopup');
+
+$('.clear-all-btn').hide();
+
 // assigning current date as the page heading 
 function pageHeading() {
     const pageHeaderChild = pageHeader.children('h2');
@@ -64,7 +68,9 @@ filterStatus.each(function () {
 
 // Event Listeners
 add.click(addDiv);
-$("h2").click(remove);
+$(".clear-all-btn").click(function () {
+    warning();
+});
 document.onload = showListItems();
 
 
@@ -175,8 +181,9 @@ function addDiv(e) {
         div.appendChild(span);
 
         todoList.append(div);
-        // after appending the list item we have to remove the text from the input box 
 
+        $('.clear-all-btn').show();
+        // after appending the list item we have to remove the text from the input box 
         userInput.val('');
 
 
@@ -271,6 +278,8 @@ function showListItems() {
             todoList.append(div);
         }
 
+        $('.clear-all-btn').show();
+
 
         $('.list-items').each(function () {
             var divIdx = $(this).index();
@@ -300,10 +309,28 @@ function showListItems() {
 
 // when user clicks on del, we have to remove the list items 
 // lets create a function for that 
+function warning() {
+    popUp.addClass('show');
+    popUp.click(function () {
+        popUp.removeClass('show');
+        location.reload();
+
+    });
+
+    $('.clear-all-btn').click(function () {
+        remove();
+    });
+
+}
+
 function remove() {
+    $('.clear-all-btn').hide();
     localStorage.clear();
     location.reload();
 }
+
+
+
 
 
 function deleteItem(innerTextOfChild, directParent) {

@@ -193,11 +193,18 @@ li {
     padding: 0 1.5rem;
 }
 
-.filter-inner {
-    display: flex;
-    justify-content: space-evenly;
-    font-family: 'Poppins', sans-serif;
+.filter-container {
     border-bottom: 1px solid rgba(122, 122, 122, 0.596);
+}
+
+
+.filter-inner {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    padding: 0rem;
 }
 
 .filter-status {
@@ -206,10 +213,17 @@ li {
     flex-direction: column;
     align-items: center;
     position: relative;
+    margin: 0 1rem;
 }
+
+.filter-status:nth-child(2)>p {
+    padding-right: 0;
+}
+
 
 .filter-status>p {
     padding: 0 0.5rem 1rem;
+    text-align: center;
 }
 
 .active {
@@ -217,6 +231,102 @@ li {
     border: 1px solid black;
     position: absolute;
     bottom: 0;
+}
+
+/* clear all button  */
+.clear-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.clear-all-btn {
+    -webkit-border-radius: 9;
+    -moz-border-radius: 9;
+    border-radius: 9px;
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+    font-size: 13px;
+    background: red;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.clear-all-btn:hover {
+    background: #d60d0d;
+    text-decoration: none;
+}
+
+/* popup  */
+/* Popup container - can be anything you want */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 
@@ -237,6 +347,18 @@ li {
 
     .header {
         font-size: 1.55rem;
+    }
+
+    .filter-status {
+        font-size: 0.9rem;
+    }
+
+    .clear-all-btn {
+        font-size: 12px;
+    }
+
+    .popup .popuptext {
+        font-size: 0.8rem;
     }
 
 }
