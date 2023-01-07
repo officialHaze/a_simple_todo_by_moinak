@@ -9,34 +9,26 @@ add.click(addDiv);
 $("h2").click(remove);
 document.onload = showListItems();
 
-// $('span').click(function () {
-//     const currentItem = $(this);
-//     return parentIdx(currentItem);
-// });
-
-// $('.check-box').click(function (e) {
-//     completeOrNot();
-//     var currentCheckBox = $(this);
-//     var currentState = e.target;
-//     return statusOfCurrentCheckBox(currentState, currentCheckBox);
-
-// });
 
 todoList.click(function (e) {
     var clicked = e.target;
     var directParent = clicked.parentElement;
-    var directChildOfDirectParent = directParent.children[0];
-    var innerTextOfChild = directChildOfDirectParent.innerText;
+    console.log(directParent);
 
     if (clicked.classList.contains('trash')) {
+        var childOfDirectParent = directParent.children[0];
+        var innerChild = childOfDirectParent.children[1];
+        var innerChildOfDivContDateAndinput = innerChild.children[0];
+        var innerTextOfChild = innerChildOfDivContDateAndinput.innerText;
         deleteItem(innerTextOfChild, directParent);
     }
 
     if (clicked.classList.contains('check-box')) {
         completeOrNot();
 
-        var innerTextOfItem = directParent.innerText
-
+        var childOfDirectParent = directParent.children[1];
+        var innerChild = childOfDirectParent.children[0];
+        var innerTextOfItem = innerChild.innerText;
 
         statusOfCurrentCheckBox(clicked, innerTextOfItem);
     }
@@ -67,6 +59,23 @@ function addDiv(e) {
 
     const li = document.createElement('li');
     li.setAttribute('class', 'item');
+
+    const divInsideLi = document.createElement('div');
+    divInsideLi.setAttribute('class', ' liItem-date');
+
+    const userInputPara = document.createElement('p');
+    userInputPara.setAttribute('class', 'user-input-para');
+
+    const creationDate = document.createElement('p');
+    creationDate.setAttribute('class', 'current-date');
+    var today = new Date();
+    var options = {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+    }
+    var todayDate = today.toLocaleDateString('en-US', options);
+    creationDate.innerText = 'Created on: ' + todayDate;
 
     const span = document.createElement('span');
     span.innerHTML = '<i class="fa-solid fa-trash"></i>';
@@ -99,7 +108,10 @@ function addDiv(e) {
     } else if (input != '' && input.length <= 35) {
         // instead of giving our own value to the li innerhtml we have to take the input from user 
         // also prepending a checkbox for the user to check after completing a task 
-        li.innerHTML = input;
+        userInputPara.innerText = input;
+        divInsideLi.appendChild(userInputPara);
+        divInsideLi.appendChild(creationDate);
+        li.appendChild(divInsideLi);
         li.prepend(checkBox);
         div.appendChild(li);
         div.appendChild(span);
@@ -161,11 +173,22 @@ function showListItems() {
             const div = document.createElement('div');
             div.setAttribute('class', 'list-items');
 
-
-
-
             const li = document.createElement('li');
             li.setAttribute('class', 'item');
+
+            const divInsideLi = document.createElement('div');
+            divInsideLi.setAttribute('class', ' liItem-date');
+
+            const creationDate = document.createElement('p');
+            creationDate.setAttribute('class', 'current-date');
+            var today = new Date();
+            var options = {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+            }
+            var todayDate = today.toLocaleDateString('en-US', options);
+            creationDate.innerText = 'Created on: ' + todayDate;
 
             const span = document.createElement('span');
             span.innerHTML = '<i class="fa-solid fa-trash"></i>';
@@ -177,7 +200,9 @@ function showListItems() {
 
             var input = x[i];
 
-            li.innerHTML = input;
+            divInsideLi.innerHTML = input;
+            divInsideLi.appendChild(creationDate);
+            li.appendChild(divInsideLi);
             li.prepend(checkBox);
             div.appendChild(li);
             div.appendChild(span);
@@ -194,10 +219,8 @@ function showListItems() {
 
             if (localStorage.getItem('newInput') != null) {
                 var p = JSON.parse(localStorage.getItem('newInput'));
-                console.log(p);
 
                 if (p[divIdx] == (contentOfChild + 'true')) {
-                    console.log(p[divIdx]);
                     childOfLi.prop('checked', true);
                 } else {
                     childOfLi.prop('checked', false);
@@ -225,6 +248,7 @@ function deleteItem(innerTextOfChild, directParent) {
 
     var x = JSON.parse(localStorage.getItem('todoTasks'));
     var indexOfInnertext = x.indexOf(innerTextOfChild);
+
 
 
     // then check if the array is empty or not , if not empty then proceed or else return false 
@@ -289,6 +313,7 @@ function statusOfCurrentCheckBox(clicked, innerTextOfItem) {
             var x = JSON.parse(localStorage.getItem('todoTasks'));
             // var inputAsPerIdx = x[indexOfGrandParent];
             var checkInpt = innerTextOfItem + w;
+
             var indexOfInnerText = x.indexOf(innerTextOfItem);
 
             // now to push this input as new input with the boolean and save it locally on another key 
@@ -347,7 +372,6 @@ function completeOrNot() {
 
         var inputInsideListItem = currentListItem.children('.item');
         var inputInsideItem = inputInsideListItem.children('.check-box');
-        console.log(inputInsideItem);
 
         var statusofInputInside = inputInsideItem.is(':checked');
 
