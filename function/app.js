@@ -1,42 +1,49 @@
+gsap.registerPlugin(Flip);
+
+
 
 // / Selectors 
 const userInput = $('input:text');
 const add = $('.add');
 const todoList = $('.todo-list');
 const filterStatus = $('.filter-status');
+const filterActive = $('.active');
 
 // adding functinality to the filter options 
-filterStatus.click(function () {
-    var currentFilterStatus = $(this);
-    var currentFilterStatusChild = currentFilterStatus.children('div');
-    var currentFilterStatusOption = currentFilterStatus.children('p');
-    var optionText = currentFilterStatusOption.text();
+filterStatus.each(function () {
+    filterStatus.click(function () {
+        var currentFilterStatus = $(this);
+        var currentFilterStatusOption = currentFilterStatus.children('p');
+        var optionText = currentFilterStatusOption.text();
 
-    filterStatus.each(function () {
-        if ($(this).children('div').attr('class') == 'active') {
-            $(this).children('div').removeClass('active');
+        var state = Flip.getState(filterActive);
+        filterActive.remove().appendTo(currentFilterStatus);
+        Flip.from(state, {
+            duration: 0.5,
+            absolute: true,
+            ease: 'elastic.out(0.9, 0.6)',
+        });
+
+        switch (optionText) {
+            case 'Completed':
+                completed();
+                break;
+
+            case 'Pending':
+                pending();
+                break;
+
+            case 'All':
+                all();
+                break;
+
+            default:
+                break;
         }
+
     });
-    currentFilterStatusChild.addClass('active');
-
-    switch (optionText) {
-        case 'Completed':
-            completed();
-            break;
-
-        case 'Pending':
-            pending();
-            break;
-
-        case 'All':
-            all();
-            break;
-
-        default:
-            break;
-    }
-
 });
+
 
 
 // Event Listeners
