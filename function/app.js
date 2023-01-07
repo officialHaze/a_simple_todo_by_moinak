@@ -8,6 +8,22 @@ const add = $('.add');
 const todoList = $('.todo-list');
 const filterStatus = $('.filter-status');
 const filterActive = $('.active');
+const pageHeader = $('.header');
+
+// assigning current date as the page heading 
+function pageHeading() {
+    const pageHeaderChild = pageHeader.children('h2');
+    var today = new Date();
+    var options = {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'short',
+    }
+    var todayDate = today.toLocaleDateString('en-US', options);
+    pageHeaderChild.text(todayDate);
+}
+
+pageHeading();
 
 // adding functinality to the filter options 
 filterStatus.each(function () {

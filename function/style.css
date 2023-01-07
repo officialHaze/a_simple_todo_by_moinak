@@ -225,7 +225,7 @@ li {
 @media(max-width: 415px) {
 
     body {
-        padding-top: 6rem;
+        padding-top: 4rem;
     }
 
     .list-container {
@@ -236,7 +236,7 @@ li {
     }
 
     .header {
-        font-size: 2rem;
+        font-size: 1.55rem;
     }
 
 }
