@@ -179,6 +179,9 @@ function showListItems() {
             const divInsideLi = document.createElement('div');
             divInsideLi.setAttribute('class', ' liItem-date');
 
+            const userInputPara = document.createElement('p');
+            userInputPara.setAttribute('class', 'user-input-para');
+
             const creationDate = document.createElement('p');
             creationDate.setAttribute('class', 'current-date');
             var today = new Date();
@@ -200,7 +203,8 @@ function showListItems() {
 
             var input = x[i];
 
-            divInsideLi.innerHTML = input;
+            userInputPara.innerText = input;
+            divInsideLi.appendChild(userInputPara);
             divInsideLi.appendChild(creationDate);
             li.appendChild(divInsideLi);
             li.prepend(checkBox);
@@ -213,14 +217,17 @@ function showListItems() {
         $('.list-items').each(function () {
             var divIdx = $(this).index();
             var childElementOfDiv = $(this).children('li');
-            var contentOfChild = childElementOfDiv.text();
+            var childOfLiItem = childElementOfDiv.children('.liItem-date');
+            var childOfLiItemDate = childOfLiItem.children('.user-input-para');
+            var contentOfChild = childOfLiItemDate.text();
+
             var childOfLi = childElementOfDiv.children('.check-box');
 
 
             if (localStorage.getItem('newInput') != null) {
-                var p = JSON.parse(localStorage.getItem('newInput'));
+                var x = JSON.parse(localStorage.getItem('newInput'));
 
-                if (p[divIdx] == (contentOfChild + 'true')) {
+                if (x[divIdx] == (contentOfChild + 'true')) {
                     childOfLi.prop('checked', true);
                 } else {
                     childOfLi.prop('checked', false);
