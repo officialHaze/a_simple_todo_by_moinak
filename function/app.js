@@ -3,6 +3,41 @@
 const userInput = $('input:text');
 const add = $('.add');
 const todoList = $('.todo-list');
+const filterStatus = $('.filter-status');
+
+// adding functinality to the filter options 
+filterStatus.click(function () {
+    var currentFilterStatus = $(this);
+    var currentFilterStatusChild = currentFilterStatus.children('div');
+    var currentFilterStatusOption = currentFilterStatus.children('p');
+    var optionText = currentFilterStatusOption.text();
+
+    filterStatus.each(function () {
+        if ($(this).children('div').attr('class') == 'active') {
+            $(this).children('div').removeClass('active');
+        }
+    });
+    currentFilterStatusChild.addClass('active');
+
+    switch (optionText) {
+        case 'Completed':
+            completed();
+            break;
+
+        case 'Pending':
+            pending();
+            break;
+
+        case 'All':
+            all();
+            break;
+
+        default:
+            break;
+    }
+
+});
+
 
 // Event Listeners
 add.click(addDiv);
@@ -342,8 +377,6 @@ function statusOfCurrentCheckBox(clicked, innerTextOfItem) {
 
             localStorage.setItem('newInput', JSON.stringify(k));
 
-
-
         } else {
             return false;
         }
@@ -391,6 +424,51 @@ function completeOrNot() {
         }
     });
 }
+
+function completed() {
+
+    var todoListChild = todoList.children('.list-items');
+
+    todoListChild.each(function () {
+        var currentListItem = $(this);
+        if (currentListItem.attr('class') == 'list-items finished') {
+            currentListItem.show();
+        } else if (currentListItem.attr('class') != 'list-items finished') {
+            currentListItem.hide();
+        }
+    });
+
+}
+
+function pending() {
+
+    var todoListChild = todoList.children('.list-items');
+
+    todoListChild.each(function () {
+        var currentListItem = $(this);
+        if (currentListItem.attr('class') == 'list-items finished') {
+            currentListItem.hide();
+        } else if (currentListItem.attr('class') != 'list-items finished') {
+            currentListItem.show();
+        }
+    });
+}
+
+
+function all() {
+
+    var todoListChild = todoList.children('.list-items');
+
+    todoListChild.each(function () {
+        var currentListItem = $(this);
+        if (currentListItem.attr('class') == 'list-items finished') {
+            currentListItem.show();
+        } else if (currentListItem.attr('class') != 'list-items finished') {
+            currentListItem.show();
+        }
+    });
+}
+
 
 
 
