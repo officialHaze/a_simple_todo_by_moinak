@@ -139,7 +139,10 @@ function addDiv(e) {
         year: 'numeric',
     }
     var todayDate = today.toLocaleDateString('en-US', options);
+
     creationDate.innerText = 'Created on: ' + todayDate;
+
+    storeCreationDate(todayDate);
 
     const span = document.createElement('span');
     span.innerHTML = '<i class="fa-solid fa-trash"></i>';
@@ -229,6 +232,7 @@ function showListItems() {
 
     if (checkData != null) {
         var x = JSON.parse(localStorage.getItem('todoTasks'));
+        var creationDateData = JSON.parse(localStorage.getItem('creationDate'));
 
 
 
@@ -249,14 +253,8 @@ function showListItems() {
 
             const creationDate = document.createElement('p');
             creationDate.setAttribute('class', 'current-date');
-            var today = new Date();
-            var options = {
-                day: 'numeric',
-                month: 'short',
-                year: 'numeric',
-            }
-            var todayDate = today.toLocaleDateString('en-US', options);
-            creationDate.innerText = 'Created on: ' + todayDate;
+
+            creationDate.innerText = 'Created on: ' + creationDateData[i];
 
             const span = document.createElement('span');
             span.innerHTML = '<i class="fa-solid fa-trash"></i>';
@@ -326,7 +324,6 @@ function warning() {
 function remove() {
     $('.clear-all-btn').hide();
     localStorage.clear();
-    location.reload();
 }
 
 
@@ -337,11 +334,22 @@ function deleteItem(innerTextOfChild, directParent) {
     // first of all i have to get the array from local storage 
     var checkData = localStorage.getItem('todoTasks');
     var checkNewInputData = localStorage.getItem('newInput');
+    var creationDateData = JSON.parse(localStorage.getItem('creationDate'));
 
     var x = JSON.parse(localStorage.getItem('todoTasks'));
     var indexOfInnertext = x.indexOf(innerTextOfChild);
 
 
+    if (creationDateData != null) {
+
+        console.log(creationDateData);
+
+        creationDateData.splice(indexOfInnertext, 1);
+
+        localStorage.setItem('creationDate', JSON.stringify(creationDateData));
+    } else {
+        return false;
+    }
 
     // then check if the array is empty or not , if not empty then proceed or else return false 
     if (checkData != null) {
@@ -372,6 +380,8 @@ function deleteItem(innerTextOfChild, directParent) {
     } else {
         return false
     }
+
+
 
 }
 
@@ -517,6 +527,25 @@ function all() {
             currentListItem.show();
         }
     });
+}
+
+
+function storeCreationDate(todayDate) {
+
+    let savedDates;
+
+    const creationDateData = JSON.parse(localStorage.getItem('creationDate'));
+
+    if (creationDateData == null) {
+        savedDates = [];
+    } else {
+        savedDates = JSON.parse(localStorage.getItem('creationDate'));
+    }
+
+    savedDates.push(todayDate);
+
+    localStorage.setItem('creationDate', JSON.stringify(savedDates));
+
 }
 
 
