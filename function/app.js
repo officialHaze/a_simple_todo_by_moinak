@@ -78,7 +78,6 @@ document.onload = showListItems();
 todoList.click(function (e) {
     var clicked = e.target;
     var directParent = clicked.parentElement;
-    console.log(directParent);
 
     if (clicked.classList.contains('trash')) {
         var childOfDirectParent = directParent.children[0];
@@ -277,6 +276,7 @@ function showListItems() {
             todoList.append(div);
         }
 
+
         $('.clear-all-btn').show();
 
 
@@ -303,6 +303,7 @@ function showListItems() {
         });
 
         completeOrNot();
+        pending();
     }
 }
 
@@ -427,6 +428,7 @@ function statusOfCurrentCheckBox(clicked, innerTextOfItem) {
             k[indexOfInnerText] = checkInpt;
 
             localStorage.setItem('newInput', JSON.stringify(k));
+            pending();
         } else {
             var x = JSON.parse(localStorage.getItem('todoTasks'));
             // var inputAsPerIdx = x[indexOfGrandParent];
@@ -436,6 +438,7 @@ function statusOfCurrentCheckBox(clicked, innerTextOfItem) {
 
             // now to push this input as new input with the boolean and save it locally on another key 
             saveNewInput(checkInpt, indexOfInnerText);
+            pending();
         }
     } else {
         var w = 'false';
@@ -452,6 +455,7 @@ function statusOfCurrentCheckBox(clicked, innerTextOfItem) {
             k[indexOfInnerText] = checkInpt;
 
             localStorage.setItem('newInput', JSON.stringify(k));
+            completed();
 
         } else {
             return false;
