@@ -229,7 +229,9 @@ li {
 
 .active {
     width: 100%;
-    border: 1px solid black;
+    content: '';
+    padding: 1px;
+    background: #222222;
     position: absolute;
     bottom: 0;
 }

@@ -111,7 +111,6 @@ add.mouseleave(function () {
 
 
 
-
 // yeah the function works with event listener click 
 function addDiv(e) {
     // prevent the page from refreshing 
@@ -185,6 +184,25 @@ function addDiv(e) {
 
         todoList.append(div);
 
+        const activeParent = filterActive.parent();
+        const activeParentStatus = activeParent.children('p').text();
+        switch (activeParentStatus) {
+            case 'Completed':
+                completed();
+                break;
+
+            case 'Pending':
+                pending();
+                break;
+
+            case 'All':
+                all();
+                break
+
+            default:
+                break;
+        }
+
         $('.clear-all-btn').show();
         // after appending the list item we have to remove the text from the input box 
         userInput.val('');
@@ -194,6 +212,7 @@ function addDiv(e) {
         alert("Slow down coach! Its always better to break down your tasks.");
         location.reload();
     }
+
 
 }
 
