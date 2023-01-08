@@ -170,8 +170,9 @@ li {
 }
 
 .moveLeft {
-    transition: transform 1s;
-    transform: translateX(-150%);
+    transition: transform 0.5s, opacity 0.1s;
+    transform: translateY(20%);
+    opacity: 0.2;
 }
 
 /* date  */
@@ -274,12 +275,12 @@ li {
 /* The actual popup */
 .popup .popuptext {
     visibility: hidden;
-    width: 160px;
+    width: 150px;
     background-color: #555;
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 8px 0;
+    padding: 0.5rem;
     position: absolute;
     z-index: 1;
     bottom: 125%;

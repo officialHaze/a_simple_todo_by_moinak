@@ -14,6 +14,7 @@ const popUp = $('#myPopup');
 
 $('.clear-all-btn').hide();
 
+
 // assigning current date as the page heading 
 function pageHeading() {
     const pageHeaderChild = pageHeader.children('h2');
@@ -322,7 +323,24 @@ function warning() {
 }
 
 function remove() {
+    popUp.removeClass('show');
     $('.clear-all-btn').hide();
+    var todoTasksData = JSON.parse(localStorage.getItem('todoTasks'));
+    var arrayOfChildren = todoList.children();
+
+    for (var i = 0; i < todoTasksData.length; i++) {
+        const listChild = arrayOfChildren[i];
+
+        if ($(listChild).hasClass('list-items') || $(listChild).hasClass('list-items finished')) {
+            $('.list-items').addClass('moveLeft');
+
+            setTimeout(() => {
+                $('.list-items').remove();
+                location.reload();
+            }, 500);
+        }
+    }
+
     localStorage.clear();
 }
 
@@ -341,8 +359,6 @@ function deleteItem(innerTextOfChild, directParent) {
 
 
     if (creationDateData != null) {
-
-        console.log(creationDateData);
 
         creationDateData.splice(indexOfInnertext, 1);
 
